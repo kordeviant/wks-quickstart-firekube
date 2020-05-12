@@ -21,8 +21,8 @@ set -euo pipefail
 
 JK_VERSION=0.3.0
 FOOTLOOSE_VERSION=0.6.2
-IGNITE_VERSION=0.5.5
-WKSCTL_VERSION=0.8.1
+IGNITE_VERSION=0.6.3
+WKSCTL_VERSION=0.8.2-beta.5
 
 config_backend() {
     sed -n -e 's/^backend: *\(.*\)/\1/p' config.yaml
@@ -154,7 +154,8 @@ jk generate -f config.yaml -f "${status}" setup.js
 rm -f "${status}"
 
 log "Updating container images and git parameters"
-wksctl init --git-url="$(git_http_url "$(git_remote_fetchurl "${git_remote}")")" --git-branch="$(git_current_branch)"
+log "--git-url="$(git_http_url "$(git_remote_fetchurl "${git_remote}")")" --git-branch="$(git_current_branch)""
+# wksctl init --git-url="$(git_http_url "$(git_remote_fetchurl "${git_remote}")")" --git-branch="$(git_current_branch)"
 
 log "Pushing initial cluster configuration"
 git add config.yaml footloose.yaml machines.yaml flux.yaml wks-controller.yaml
